@@ -1,6 +1,6 @@
 cask "fitlock" do
-  version "1.1.0"
-  sha256 "82c6cf1a89fce03391dbf9e2ed911d7640152c7bad4912cf42210ae14ab701b3"
+  version "1.1.1"
+  sha256 "9f5cd393ad2a3484324a7812dc96cf60822feaf69b610e5d27809616e7f4bf89"
 
   url "https://github.com/vood/fitlock/releases/download/v#{version}/fitlock-#{version}.dmg"
   name "fitlock"
@@ -15,6 +15,13 @@ cask "fitlock" do
   depends_on macos: :sonoma
 
   binary "fitlock"
+
+  # An upgrade removes the old agent; put it back when one was set up before.
+  postflight_steps do
+    if_path_exists "~/.config/fitlock/config.json" do
+      run "fitlock", args: ["install"]
+    end
+  end
 
   uninstall launchctl: "io.fitlock.agent",
             delete:    [
