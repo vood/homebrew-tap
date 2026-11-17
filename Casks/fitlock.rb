@@ -23,14 +23,11 @@ cask "fitlock" do
     end
   end
 
-  uninstall launchctl: "io.fitlock.agent",
-            delete:    [
-              "~/.local/bin/fitlock",
-              "~/Library/LaunchAgents/io.fitlock.agent.plist",
-            ]
+  uninstall launchctl: "io.fitlock.agent"
 
   zap trash: [
     "~/.config/fitlock",
+    "~/.local/bin/fitlock",
     "~/.local/state/fitlock",
   ]
 
